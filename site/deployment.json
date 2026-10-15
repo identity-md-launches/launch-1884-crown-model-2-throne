@@ -1,0 +1,15 @@
+{
+  "local": false,
+  "chainId": 4663,
+  "chainName": "Robinhood Chain",
+  "rpcUrl": "https://rpc.mainnet.chain.robinhood.com",
+  "explorerUrl": "https://robin.etherscan.io",
+  "registry": null,
+  "hook": null,
+  "token": null,
+  "poolManager": null,
+  "poolId": null,
+  "poolKey": null,
+  "chartUrl": null,
+  "deploymentBlock": null
+}

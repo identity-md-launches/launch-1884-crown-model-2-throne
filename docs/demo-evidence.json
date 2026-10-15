@@ -1,0 +1,188 @@
+{
+  "scope": "Local Anvil simulation only; not a Robinhood Chain deployment",
+  "chainId": 4663,
+  "secondBeneficiary": {
+    "name": "Second beneficiary (Anvil account #1)",
+    "address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+  },
+  "genesisBeneficiary": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "token": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+  "poolId": "0xd6a79777ab047ac549a98961b2396e4792d02f41ea201e89df9280456b97259f",
+  "registry": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "hook": "0x46ed6Ac11E3806D651FC8ab1A6F703D42CE11044",
+  "hookSalt": "0x000000000000000000000000000000000000000000000000000000000000462c",
+  "compiler": "0.8.26",
+  "timing": "Advanced local EVM time by the full 72-hour voting window and 24-hour timelock",
+  "genesisTokenFeesWei": "9871580343970612",
+  "genesisEthFeesWei": "10068409970553935",
+  "successorTokenFeesWei": "9873513961987857",
+  "tokenUnchanged": true,
+  "poolUnchanged": true,
+  "reignCount": 2,
+  "allAccrualsClaimed": true,
+  "registryBalanceWei": "0",
+  "receipts": [
+    {
+      "step": "Deploy ThroneRegistry",
+      "hash": "0xaa50610db469c0781c4b0a9a5b15108011919a62e5ba74a6633cae9e10636126",
+      "block": 1,
+      "gasUsed": "1328814"
+    },
+    {
+      "step": "Deploy ThroneToken",
+      "hash": "0x8d0a6cd836dcf2b46e2062d601e27be77b76aa140497be27b54393a3a331e132",
+      "block": 2,
+      "gasUsed": "354429"
+    },
+    {
+      "step": "Deploy PoolManager",
+      "hash": "0x669d526fcea3ce813ba8e4976bcc2b7f0805edd8d2dee5a09c78de2b3f5dfb87",
+      "block": 3,
+      "gasUsed": "3787277"
+    },
+    {
+      "step": "Deploy CrownHookFactory",
+      "hash": "0x37b4308c91869b6bab9424bf29f202155035956df9303fd5176cce7a50041caf",
+      "block": 4,
+      "gasUsed": "1974049"
+    },
+    {
+      "step": "Deploy CrownHook at its mined permission address",
+      "hash": "0xf81f093de91cc13e5274d06dda32449eca08bb3e550b9e1af08ab697f2f12039",
+      "block": 5,
+      "gasUsed": "1561645"
+    },
+    {
+      "step": "Deploy DemoRouter",
+      "hash": "0xded80f12ba32793e3b42b02b35e90f29dbd34e15368023bd7aa4fc5a0776e649",
+      "block": 6,
+      "gasUsed": "841828"
+    },
+    {
+      "step": "Register the THRONE genesis reign",
+      "hash": "0x66b96e2c9273614d8b878b08bc674f95f16cf07f54023bccbe0265e666aa1c69",
+      "block": 7,
+      "gasUsed": "192871"
+    },
+    {
+      "step": "Set the local PoolManager once",
+      "hash": "0x80484d9d7d0b9022739f84cc8f5172f27b89d283547765c73e2aecd580b42af9",
+      "block": 8,
+      "gasUsed": "47604"
+    },
+    {
+      "step": "Register the immutable pool and default 100 bps fee",
+      "hash": "0x8279c5241523be21293419d9f8bd2be39df7f9c08f9079092b11e81c349b21bd",
+      "block": 9,
+      "gasUsed": "123447"
+    },
+    {
+      "step": "Initialize the canonical pool",
+      "hash": "0xcccfabd8ea813e2329a5714bd0133630825aaeb18f4a7574a5c0a56a318740b6",
+      "block": 10,
+      "gasUsed": "89811"
+    },
+    {
+      "step": "Approve exact liquidity allowance",
+      "hash": "0x99fd9cc6bbc1659336d330c054b6a357517e8e5f63954fdb66b78b0353257503",
+      "block": 11,
+      "gasUsed": "45949"
+    },
+    {
+      "step": "Seed real Uniswap v4 liquidity",
+      "hash": "0x979e14e3ab4f1815ae297b71e1533a3d0c263492147aaee9f835ce95e9b67cb5",
+      "block": 12,
+      "gasUsed": "265028"
+    },
+    {
+      "step": "Fund the local trader with THRONE",
+      "hash": "0x712e0d94f9c60338ba3c8d7aaf3731e29f9bdadb0cc80a08c631ecddb6879e16",
+      "block": 13,
+      "gasUsed": "51405"
+    },
+    {
+      "step": "Approve local sell amount",
+      "hash": "0x7f576a42a694177b2f514123b4383e1486cf922ba5c2db3d407c0a4f93511dfb",
+      "block": 14,
+      "gasUsed": "45937"
+    },
+    {
+      "step": "Buy before the challenge",
+      "hash": "0x5e61216ad25fcfe2c797f2764933256867526fbe0ff2b0224746ffd7da811bf4",
+      "block": 15,
+      "gasUsed": "297712"
+    },
+    {
+      "step": "Open bonded challenge naming the second beneficiary",
+      "hash": "0xc82a803d592adc234a5d9c8d40f1e78f8d231ea7cf795bbd49781fd467a82a43",
+      "block": 16,
+      "gasUsed": "258227"
+    },
+    {
+      "step": "Stake 0.05 ETH for the challenger",
+      "hash": "0x99411fe34145b023f12cc2d71ed6b22f3dbc61c1f17d1ddeb6b366191c70ee24",
+      "block": 17,
+      "gasUsed": "48010"
+    },
+    {
+      "step": "Stake 0.02 ETH for the reigning side",
+      "hash": "0x9e54ddadee08f13a39b6715574abfbada614668d8669e163e30b218eb221a4e1",
+      "block": 18,
+      "gasUsed": "99286"
+    },
+    {
+      "step": "Sell during the live challenge, accruing native ETH fees",
+      "hash": "0xe7041caa09ccf7d328b81ea4dd5db0cf61c266a7ec2c7c2eab56626989111e9d",
+      "block": 19,
+      "gasUsed": "304079"
+    },
+    {
+      "step": "Claim token fees while voting is live",
+      "hash": "0xdaa176748477d6db01a48c5a7d9613b8455e0a2a5b51540ac8629622c3095557",
+      "block": 20,
+      "gasUsed": "127741"
+    },
+    {
+      "step": "Claim native ETH fees while voting is live",
+      "hash": "0xbd643c330a5a173a2006ecec91050bccd73b5526b6cc351d767a025d4e95be70",
+      "block": 21,
+      "gasUsed": "106083"
+    },
+    {
+      "step": "Finalize after the simulated 72h vote plus 24h timelock",
+      "hash": "0xef92d33468dc929eaf45b82923d04fcdbd43fd795899b3b438d760e316c769c3",
+      "block": 23,
+      "gasUsed": "257508"
+    },
+    {
+      "step": "Buy after the dethrone",
+      "hash": "0xc1ef9749f400d49ea71c5415424a292fc0d6cdcddf421f8f0903f759a8772fde",
+      "block": 24,
+      "gasUsed": "263540"
+    },
+    {
+      "step": "Second beneficiary claims the new fee stream",
+      "hash": "0xac61a1687d4caf22a9007d70bf57bfb9f0fa130df4f220fc4bc998524a81aabb",
+      "block": 25,
+      "gasUsed": "127741"
+    },
+    {
+      "step": "Losing side claims its 80% refund",
+      "hash": "0xf651f4076ea55f3a6e0a814251906d50d0e0c57bde7c8c16cb1e2067ba1f591a",
+      "block": 26,
+      "gasUsed": "116755"
+    },
+    {
+      "step": "Winning side claims stake and its pro-rata slash reward",
+      "hash": "0xfcae1a7ebcd98c4b586f30f5e117e6e85d0eb3b4be8f298e7f297cae964fdced",
+      "block": 27,
+      "gasUsed": "87092"
+    },
+    {
+      "step": "Pay the fixed treasury its 0.002 ETH share",
+      "hash": "0x25e6b7a6cfac58c6fb3a34fe7b317e25027bae76a5e90f8fe4a816fac0eafb31",
+      "block": 28,
+      "gasUsed": "84916"
+    }
+  ]
+}

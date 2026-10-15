@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#161b18">
+  <meta name="description" content="THRONE: one immortal token, an open contest for its fee stream. Explore the current reign, stake in a challenge, and claim your crown fees.">
+  <title>THRONE — The dynasty lives here</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="vendor/ethers.umd.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="topbar wrap">
+    <a class="wordmark" href="#" aria-label="Throne home"><svg viewBox="0 0 32 28" aria-hidden="true"><path d="M3 7l7 6 6-11 6 11 7-6-3 16H6zM6 27h20"/></svg> THRONE<span>MODEL 02</span></a>
+    <div class="header-actions"><span class="network"><i></i><span id="network">Robinhood Chain</span></span><button id="connect" class="button small">Connect wallet <span>↗</span></button></div>
+  </header>
+
+  <main class="wrap">
+    <div id="notice" class="notice" role="status">Loading deployment…</div>
+    <section class="hero">
+      <div><p class="eyebrow">THE CANONICAL TICKER / THRONE</p><h1>One token.<br><em>Every reign.</em></h1><p class="intro">The chart lives forever. The crown belongs to whoever wins the throne.</p><div class="token-links"><a id="token-link" aria-disabled="true">Token ↗</a><a href="#pool">Canonical pool ↓</a><a id="chart-link" aria-disabled="true">Chart awaiting indexing</a></div></div>
+      <div class="crown-art" aria-hidden="true"><span class="orbit one"></span><span class="orbit two"></span><svg viewBox="0 0 260 220"><path d="M35 65L85 103L130 27L175 103L225 65L205 176H55Z"/><path d="M58 193H202"/><circle cx="35" cy="60" r="6"/><circle cx="130" cy="22" r="6"/><circle cx="225" cy="60" r="6"/><path class="jewel" d="M130 110L144 131L130 152L116 131Z"/></svg><span class="art-caption">A PERMANENT TOKEN.<br>AN OPEN THRONE.</span></div>
+    </section>
+
+    <section class="throne-card" aria-labelledby="holder-title">
+      <div class="holder"><p class="eyebrow"><span class="live-dot"></span> CURRENT REIGN <span id="reign-number">—</span></p><h2 id="holder-title">The throne holder</h2><a id="holder" class="address large">Awaiting deployment</a><p class="muted">Reigning since <span id="reign-since">—</span></p><dl class="holder-details"><div><dt>Controller</dt><dd id="controller">—</dd></div><div><dt>Beneficiary</dt><dd id="beneficiary">—</dd></div></dl></div>
+      <div class="fee-overview"><p class="eyebrow">THE CROWN’S FEE STREAM</p><div class="fee-head"><span>Currency</span><span>Accrued</span><span>Claimed</span></div><div class="fee-row"><strong>ETH</strong><span id="eth-accrued">—</span><span id="eth-claimed">—</span></div><div class="fee-row"><strong>THRONE</strong><span id="token-accrued">—</span><span id="token-claimed">—</span></div><p class="muted small-text">Lifetime totals across every reign. Unclaimed fees stay with the wallet that earned them.</p><div class="fee-tag"><span id="fee-rate">1%</span> of each swap’s unspecified currency</div></div>
+    </section>
+
+    <div class="two-col">
+      <section class="panel challenge-panel" aria-labelledby="challenge-title">
+        <div class="section-top"><p class="eyebrow">THE CONTEST</p><span id="challenge-badge" class="badge">—</span></div><h2 id="challenge-title">Challenge the throne</h2><p id="challenge-summary" class="muted">A bonded stake-vote decides who earns the next fees.</p>
+        <div id="live-challenge" hidden><p>Candidate <a id="candidate" class="address"></a></p><div class="countdown"><strong id="countdown">—</strong><span id="countdown-label">remaining in the vote</span></div><div class="stake-labels"><span>Reigning <b id="reigning-stake">—</b></span><span>Challenger <b id="challenger-stake">—</b></span></div><div class="stake-bar"><i id="stake-bar"></i></div><p id="quorum" class="small-text muted"></p><p id="vote-dates" class="small-text muted"></p><form id="stake-form"><label for="side">Back a side</label><div class="form-row"><select id="side"><option value="1">Challenger</option><option value="0">Reigning</option></select><input id="stake-amount" inputmode="decimal" placeholder="0.01" aria-label="ETH stake" required><span class="unit">ETH</span></div><button type="submit" class="button full" disabled>Stake ETH ↗</button></form><button id="finalize" class="button full" disabled>Finalize challenge ↗</button></div>
+        <form id="challenge-form"><label for="candidate-input">Candidate beneficiary wallet</label><input id="candidate-input" placeholder="0x…" autocomplete="off" spellcheck="false" required><p class="small-text muted">0.01 ETH bond, credited to your challenger stake. Voting stays open for 72 hours, followed by a 24-hour timelock.</p><button type="submit" class="button full" disabled>Open challenge · 0.01 ETH ↗</button></form>
+        <p id="eligibility" class="small-text muted"></p>
+      </section>
+
+      <section class="panel" aria-labelledby="claim-title"><p class="eyebrow">YOUR TREASURY</p><h2 id="claim-title">Claim what’s yours.</h2><p class="muted">Fees accrue continuously. Claim them any time, including during a challenge.</p><div class="claim-row"><div><span class="muted small-text">Available ETH</span><strong id="eth-owed">—</strong></div><button id="claim-eth" class="button secondary" disabled>Claim ETH ↗</button></div><div class="claim-row"><div><span class="muted small-text">Available THRONE</span><strong id="token-owed">—</strong></div><button id="claim-token" class="button secondary" disabled>Claim THRONE ↗</button></div><div class="refund-box"><h3>Recover your stake</h3><p class="muted small-text">After finalization, winners recover their stake plus their share of the slash. Losing stakes receive their share of the 80% refund pool.</p><form id="refund-form"><label for="refund-id">Challenge ID</label><div class="form-row"><input id="refund-id" inputmode="numeric" placeholder="1" required><button type="submit" class="button secondary" disabled>Claim refund ↗</button></div></form></div><p id="wallet-label" class="small-text muted">Connect a wallet to see your balances.</p></section>
+    </div>
+
+    <section class="dynasty" aria-labelledby="dynasty-title"><div class="section-top"><div><p class="eyebrow">THE DYNASTY LOG</p><h2 id="dynasty-title">History keeps its crown.</h2></div><span id="dynasty-count" class="badge">0 reigns</span></div><ol id="timeline" class="timeline"><li class="muted">The genesis reign will appear after registration.</li></ol><button id="more-reigns" class="button secondary" hidden>Load earlier reigns</button></section>
+
+    <section id="pool" class="panel pool-panel"><div><p class="eyebrow">THE PERMANENT RECORD</p><h2>THRONE / ETH</h2><p class="muted">A single canonical Uniswap v4 pool, wearing CrownHook.</p></div><dl class="pool-details"><div><dt>Token</dt><dd><a id="pool-token" class="address">—</a></dd></div><div><dt>Pool ID</dt><dd id="pool-id" class="address">—</dd></div><div><dt>PoolManager</dt><dd><a id="pool-manager" class="address">—</a></dd></div><div><dt>CrownHook</dt><dd><a id="pool-hook" class="address">—</a></dd></div><div><dt>Registry</dt><dd><a id="pool-registry" class="address">—</a></dd></div><div><dt>Pool key</dt><dd id="pool-key">—</dd></div><div><dt>Supply</dt><dd id="token-supply">Fixed at launch</dd></div></dl></section>
+
+    <section class="how"><p class="eyebrow">HOW THE THRONE WORKS</p><h2>Earn the crown.<br>Leave the history intact.</h2><div class="how-grid"><article><span>01</span><h3>One immortal token</h3><p>The registry binds the uppercase ticker to its token once. Dethroning never replaces the token, changes supply, or moves the canonical pool.</p></article><article><span>02</span><h3>A contest of conviction</h3><p>Bond 0.01 ETH to name a new beneficiary. Stake ETH on either side for 72 hours. The challenger needs strictly more stake and at least 0.05 ETH total participation. Ties and missed quorum defend the throne.</p></article><article><span>03</span><h3>The next reign begins</h3><p>After a further 24 hours, anyone can finalize. A win redirects future fees; earned fees remain claimable. Losers recover 80% as a pool, with half the 20% slash rewarding winners and half funding the fixed treasury.</p></article></div><p class="muted small-text">The demo’s minimum reign is zero; the production default is seven days. Failed challenges impose a three-day cooldown. Integer rounding goes to the treasury after every staker claims; if no winning stake exists, the full slash goes to the treasury. No registry administrator can override a result.</p></section>
+
+    <section id="demo-controls" class="panel demo-controls" hidden><p class="eyebrow">LOCAL DEMONSTRATION</p><p>This is an isolated Anvil chain. Its accounts and transactions are for this local demo only.</p><div class="form-row"><select id="demo-account" aria-label="Local demo account"></select><button id="demo-connect" class="button secondary">Use demo account</button><button id="demo-advance" class="button secondary">Advance to next deadline</button></div><div class="form-row"><button id="demo-buy" class="button secondary">Demo buy · 0.01 ETH</button><button id="demo-sell" class="button secondary">Demo sell · 0.01 THRONE</button></div></section>
+    <div id="tx-status" class="tx-status" role="status" aria-live="polite" hidden></div>
+  </main>
+  <footer class="wrap"><span>THRONE / CROWN MODEL 2</span><span>One ticker. One token. An entire dynasty.</span><span id="last-block">No chain data yet</span></footer>
+</body>
+</html>
