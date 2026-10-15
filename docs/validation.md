@@ -21,3 +21,5 @@ The Foundry test suite has three isolated suites: registry math/state transition
 The compiler may emit generic lint warnings about timestamp comparisons and checked casts. Timers intentionally use `block.timestamp`. The fee cast is bounded because the source balance delta is int128 and the fee cap is 5%; the beneficiary-address cast occurs only after an explicit uint160 upper-bound check. Test-only casts and token transfer calls operate on the fixed local token. These observations do not constitute independent security review.
 
 Release responsibilities and all setup powers are documented in the root README. In particular, the actual Robinhood PoolManager must be verified and configured once, public deployment economics must be selected by the launch operator, and the live site must be supplied actual deployment/indexer values. No public deployment is represented by the empty public configuration.
+
+The canonical ticker page built in the follow-up job (`web/`, export `dist/`) has its own record in [validation-site.md](validation-site.md).

@@ -139,6 +139,25 @@ Across all tickers, ERC-6909 balance backs the sum of outstanding credits in tha
 
 Serve `site/` from any static host. `site/deployment.json` deliberately contains **null unconfigured deployment fields** and no dummy addresses. After public deployment, fill it with the actual addresses, pool key/ID, deployment block, and a verified canonical chart URL. The page displays an explicit awaiting-launch state until then. Native ETH's zero currency address in a `PoolKey` is Uniswap's standard currency encoding, never a stand-in beneficiary or manager.
 
+## Canonical ticker page (`web/`, export in `dist/`)
+
+The published page is a Vite, React and TypeScript app in `web/`, exported as plain files to `dist/` (relative base, one page, no server). It is the page a visitor opens to use the contracts: the one THRONE token and its pool facts, the current throne holder (controller and beneficiary are the same wallet), accrued and claimed crown fees with Claim controls, the reign history, the live challenge (phase, both stakes, quorum, time left) with Open challenge, Stake and Finalize, stake recovery, the treasury payout, and a plain-English how-it-works section. The earlier static page in `site/` remains the local Anvil demo's UI (`node tools/demo.mjs --serve`); the exported app in `dist/` is what gets hosted.
+
+Configuration lives in two places only: `web/src/config.ts` (chain id 4663, public RPC `https://rpc.mainnet.chain.robinhood.com`, explorer `https://robin.etherscan.io`, the treasury, the spec constants, the three ABIs under `web/src/abi/`, and the wagmi connector set) and the runtime file `dist/deployment.json` (`web/public/deployment.json` in source) that carries the deployed addresses, pool key and chart URL. Addresses are **null until launch**; the page then shows an awaiting-launch state with the controls gated. When a launch handoff ships `imd-deployment.json`, set `"manifest": "imd-deployment.json"` in `deployment.json` and the app reads the contract set, pool key and network block from the manifest instead. No private credentials exist anywhere in the bundle.
+
+Wallets connect one way: browser extensions by EIP-6963, phones through "Open in MetaMask / Coinbase Wallet / Rabby / Phantom" links, and Coinbase Smart Wallet. No relay and no WalletConnect project id. On the wrong network the control reads "Switch to Robinhood Chain"; a wallet that does not know the chain is sent `wallet_addEthereumChain` with the public RPC and explorer from `config.ts`. Swaps are not offered on the page because the network's vetted Uniswap router table (`.imd/reads/network.json`) was not supplied; the page says so and links the pool contracts instead.
+
+```sh
+cd web
+npm ci                 # install from the committed package-lock.json
+npm run typecheck      # tsc --noEmit
+npm test               # vitest: formatting, phases, challenge math, configuration loading
+npm run build          # writes ../dist with base ./
+npm run preview        # serve the export locally
+```
+
+Rebuild after any change under `web/` and commit `dist/` with the source; the publisher pins the committed files without rebuilding. `node_modules` is never committed. Validation results, the design review and its limitations are in [docs/validation-site.md](docs/validation-site.md); the implemented design tokens and components are in [DESIGN.md](DESIGN.md).
+
 ## After launch
 
 These operations belong to the launch payer/operator. The application cannot invent the missing public values or execute them without deployment authority.
@@ -147,7 +166,7 @@ These operations belong to the launch payer/operator. The application cannot inv
 2. Deploy the registry (`0` for the requested demo launch, `7 days` or `ProductionThroneRegistry` for production) and token to the actual payer. Register THRONE to that exact token and payer once. Never redeploy/remint a registered launch token to change its beneficiary.
 3. Verify the target chain's authoritative Uniswap v4 PoolManager address and bytecode/interface before calling `configurePoolManager`. Obtain it from the chain/network's approved Uniswap deployment records. The supplied chain inputs did not contain a verified manager; code existence alone is not an identity check. Source chain endpoint: `https://rpc.mainnet.chain.robinhood.com`; explorer: `https://robin.etherscan.io`; chain ID **4663**.
 4. Deploy the factory and mined hook with the registry and explicit launch payer/operator. Register the pool with its final fee/key/price and initialize as that operator. Seed liquidity through a verified compatible v4 periphery; the fixture router is not a production substitute. Keep exact approvals and slippage limits.
-5. Verify source and constructor parameters, then populate the public site configuration. Export ABIs with `node tools/export-abi.mjs` after compiling. Publish the static site and the verified indexed pool/chart link. Do not publish the local configuration as a public deployment.
+5. Verify source and constructor parameters, then populate the public site configuration: `dist/deployment.json` (or the launch's `imd-deployment.json` manifest, referenced from it) with the registry, hook, token, PoolManager, pool key and verified chart URL. Export ABIs with `node tools/export-abi.mjs` after compiling and regenerate `web/src/abi/` if the contracts ever change. Publish `dist/` and the verified indexed pool/chart link. Do not publish the local configuration as a public deployment.
 6. Monitor challenges. Anyone may finalize after the timelock; each staker and fee beneficiary must submit its own claim. Anyone may trigger the fixed treasury payout. There is no automatic transaction scheduler or privileged keeper.
 
 The registry has no owner, pause, rescue, upgrade or emergency override. Hook setup authority is limited to the explicit deployer, the one-time manager selection and registration of new immutable pool entries. No hook operation can change the registry's token or beneficiary. Loss of setup authority before configuration/initialization prevents finishing that setup. Transactions and clocks on Robinhood depend on its sequencer and chain availability; timestamp windows do not remove censorship or transaction-inclusion risk.
